@@ -10,8 +10,12 @@
 ABaseCharacter::ABaseCharacter()
 {
 	PrimaryActorTick.bCanEverTick = false;
-	
+
+	//CharacterMovementComponent defaults
 	GetCharacterMovement()->bOrientRotationToMovement = true;
+
+	//AI defaults
+	AutoPossessAI = EAutoPossessAI::Spawned;
 }
 
 // Called when the game starts or when spawned
