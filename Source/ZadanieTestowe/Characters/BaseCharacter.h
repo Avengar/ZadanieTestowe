@@ -3,6 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "EnvironmentQuery/EnvQuery.h"
+
 #include "GameFramework/Character.h"
 #include "BaseCharacter.generated.h"
 
@@ -15,15 +18,31 @@ public:
 	// Sets default values for this character's properties
 	ABaseCharacter();
 
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	//Restart function called when Pawn is being possesed
+	virtual void Restart() override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+protected:
+	
+	/** Blackboard variable used by character. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "AISetup")
+    UBlackboardData* BlackboardData;
+    	
+	/** Behaviour tree  used by character. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "AISetup")
+    UBehaviorTree* BehaviourTree;
+	
+	/**Movement speed used by CharacterMovement.*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AISetup")
+	float MovementSpeed;
+	
+	/**EQS reference used for searching desired movement location*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AISetup")
+	UEnvQuery* MovementEnvironmentalQuery;
 };

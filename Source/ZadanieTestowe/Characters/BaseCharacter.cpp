@@ -3,32 +3,39 @@
 
 #include "BaseCharacter.h"
 
-// Sets default values
+#include "AIController.h"
+#include "GameFramework/CharacterMovementComponent.h"
+
+// Set default values
 ABaseCharacter::ABaseCharacter()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
+	PrimaryActorTick.bCanEverTick = false;
+	
+	GetCharacterMovement()->bOrientRotationToMovement = true;
 }
 
 // Called when the game starts or when spawned
 void ABaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+}
+
+void ABaseCharacter::Restart()
+{
+	//Get AIController & BlackboardComponent
+	AAIController* pAIController = Cast<AAIController>(GetController());
+	UBlackboardComponent* pBlackboardComponent = pAIController->GetBlackboardComponent();
+
+	//Set desired Blackboard and BehaviorTree for AI
+	pAIController->UseBlackboard(BlackboardData,pBlackboardComponent);
+	pAIController->RunBehaviorTree(BehaviourTree);
+	Super::Restart();
 }
 
 // Called every frame
 void ABaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-}
-
-// Called to bind functionality to input
-void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 }
 
