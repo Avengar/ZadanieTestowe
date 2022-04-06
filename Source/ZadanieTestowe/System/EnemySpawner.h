@@ -23,9 +23,11 @@ public:
 	ABaseCharacter* SpawnEnemy(TSubclassOf<ABaseCharacter> EnemyClassToSpawn);
 	
 protected:
+	/**Arrow used for clarity on level, to determine spawn direction*/
 	UPROPERTY()
 	UArrowComponent* SpawnDirectionArrow;
 
+	/**Billboard component for easier spawner identification on levels*/
 	UPROPERTY(EditAnywhere)
 	UBillboardComponent* SpawnerIcon;
 };

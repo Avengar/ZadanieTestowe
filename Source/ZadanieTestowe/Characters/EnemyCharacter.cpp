@@ -2,3 +2,24 @@
 
 
 #include "EnemyCharacter.h"
+
+AEnemyCharacter::AEnemyCharacter() : Super()
+{
+	HealthPoints = 100;
+}
+
+void AEnemyCharacter::DealDamage(int32 DamageValue)
+{
+	HealthPoints = HealthPoints - DamageValue;
+	
+	//We want to kill this enemy now, since we lost all HP
+	if(HealthPoints <= 0)
+	{
+		Death();
+	}
+}
+
+void AEnemyCharacter::Death()
+{
+	this->Destroy();
+}

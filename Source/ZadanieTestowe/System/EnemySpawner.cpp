@@ -3,7 +3,7 @@
 
 #include "EnemySpawner.h"
 
-// Sets default values
+
 AEnemySpawner::AEnemySpawner()
 {
 	PrimaryActorTick.bCanEverTick = false;
@@ -25,7 +25,8 @@ ABaseCharacter* AEnemySpawner::SpawnEnemy(TSubclassOf<ABaseCharacter> EnemyClass
 	//Validate enemy class
 	if(IsValid(EnemyClassToSpawn) == false)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Enemy class not provided in SpawnEnemy"));
+		const FString logErrorMessage = FString::Printf(TEXT("Enemy class not provided in  : %s"), *this->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *logErrorMessage);
 		return nullptr;
 	}
 
