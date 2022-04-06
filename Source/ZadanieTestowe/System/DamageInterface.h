@@ -22,5 +22,7 @@ class ZADANIETESTOWE_API IDamageInterface
 
 public:
 	/**Called when we want to deal damage to implementing actor*/
-	virtual void DealDamage(int32 DamageValue);
+	UFUNCTION(BlueprintCallable,BlueprintNativeEvent)
+	void DealDamage(int32 DamageValue);
+	virtual void DealDamage_Implementation(int32 DamageValue) {};
 };

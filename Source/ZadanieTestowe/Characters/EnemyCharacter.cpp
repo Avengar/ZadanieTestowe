@@ -8,7 +8,7 @@ AEnemyCharacter::AEnemyCharacter() : Super()
 	HealthPoints = 100;
 }
 
-void AEnemyCharacter::DealDamage(int32 DamageValue)
+void AEnemyCharacter::DealDamage_Implementation(int32 DamageValue)
 {
 	HealthPoints = HealthPoints - DamageValue;
 	

@@ -22,7 +22,7 @@ public:
 protected:
 	/**Apply damage, DamageInterfaceOverride, blueprint callable for debug purposes*/
 	UFUNCTION(BlueprintCallable)
-	virtual void DealDamage(int32 DamageValue) override;
+	virtual void DealDamage_Implementation(int32 DamageValue) override;
 	
 	/**Handle enemy death logic. Called by DealDamage when health reaches 0*/
 	void Death();
