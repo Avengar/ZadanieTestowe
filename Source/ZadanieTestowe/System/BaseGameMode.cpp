@@ -3,3 +3,8 @@
 
 #include "BaseGameMode.h"
 
+ABaseGameMode::ABaseGameMode()
+{
+	//Set our GameState class as default
+	GameStateClass = ABaseGameState::StaticClass();
+}
