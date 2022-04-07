@@ -19,6 +19,7 @@ public:
 protected:
 	
 	/**Function spawns projectile and starts cooldown timer*/
+	UFUNCTION(BlueprintCallable)
 	void FireWeapon();
 	
 protected:
