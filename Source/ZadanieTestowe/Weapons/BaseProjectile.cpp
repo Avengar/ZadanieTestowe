@@ -13,6 +13,7 @@ ABaseProjectile::ABaseProjectile()
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovementComponent"));
 	ProjectileMovementComponent->InitialSpeed = 1500.f;
 	ProjectileMovementComponent->ProjectileGravityScale = 0.f;
+	ProjectileMovementComponent->Velocity = FVector(0.f,1.f,0.f);
 
 	//Mesh component setup
 	ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ProjectileMesh"));
@@ -29,13 +30,16 @@ ABaseProjectile::ABaseProjectile()
 	//Bind hit event from Mesh, to handle ProjectileHitting
 	ProjectileMesh->OnComponentHit.AddDynamic(this, &ABaseProjectile::OnProjectileHit);
 	
-	//Base projectile damage
+	//Projectile defaults
 	ProjectileDamage = 50;
+	ProjectileLifeSpan = 8.f;
 }
 
 // Called when the game starts or when spawned
 void ABaseProjectile::BeginPlay()
 {
+	//bind timer so we can destroy projectile if it doesn't hit anything
+	GetWorld()->GetTimerManager().SetTimer(m_lifespanTimerHandle, this, &ABaseProjectile::DestroyProjectile, ProjectileLifeSpan, false);
 	Super::BeginPlay();
 }
 
@@ -54,6 +58,14 @@ void ABaseProjectile::OnProjectileHit(UPrimitiveComponent* HitComponent, AActor*
 	}
 
 	//Destroy bullet on hit even if no damage was dealt
-	this->Destroy();
+	DestroyProjectile();
 }
 
+void ABaseProjectile::DestroyProjectile()
+{
+	if(m_lifespanTimerHandle.IsValid())
+	{
+		m_lifespanTimerHandle.Invalidate();
+	}
+	this->Destroy();
+}

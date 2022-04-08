@@ -8,3 +8,13 @@ ABaseGameMode::ABaseGameMode()
 	//Set our GameState class as default
 	GameStateClass = ABaseGameState::StaticClass();
 }
+
+void ABaseGameMode::GetGameplaySettings_Implementation(FGameSettings& OutGameSettings) 
+{
+	OutGameSettings = GameSettings;
+}
+
+void ABaseGameMode::SetGameplaySettings_Implementation(FGameSettings NewSettings)
+{
+	GameSettings = NewSettings;
+}

@@ -16,7 +16,7 @@ ABaseWeapon::ABaseWeapon()
 	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("ProjectileSpawnPoint"));
 	ProjectileSpawnPoint->SetupAttachment(WeaponMesh);
 }
-
+//TODO:Set cooldown timer
 void ABaseWeapon::FireWeapon()
 {
 	//Check if we have valid projectile class

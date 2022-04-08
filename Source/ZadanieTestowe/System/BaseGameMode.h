@@ -5,42 +5,31 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "BaseGameState.h"
+#include "GameplaySettingsInterface.h"
 #include "BaseGameMode.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ZADANIETESTOWE_API ABaseGameMode : public AGameModeBase
+class ZADANIETESTOWE_API ABaseGameMode : public AGameModeBase, public IGameplaySettingsInterface
 {
 	GENERATED_BODY()
 
 public:
 	ABaseGameMode();
-public:
-	//Game modifiers //
-
-	/**How far enemy can be from player character to be able to be shot */
-	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "GameSetup")
-	float PlayerAttackRange;
 	
-	/**Player character movement speed.*/
-	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "GameSetup")
-	float PlayerMovementSpeed;
-
-	/**Enemy character movement speed.*/
-	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "GameSetup")
-	float EnemyMovementSpeed;
+	//GameplaySettingsInterface
 	
-	/**Number of spawned enemies at the beggining of the round.*/
-	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "GameSetup")
-	int32 NumberOfEnemies;
-	
-	/**Amount of damage dealt by one projectile*/
-	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "GameSetup")
-	int32 ProjectileDamage;
+	/**Returns game settings*/
+	virtual void GetGameplaySettings_Implementation(FGameSettings& OutGameSettings) override;
 
-	/**Amount of health that each enemy spawns with*/
-	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "GameSetup")
-	int32 EnemyHealth;
+	/**Set new values for game settings*/
+	virtual void SetGameplaySettings_Implementation(FGameSettings NewSettings) override;
+	
+protected:
+	
+	/**Variable storing all gameplay settings*/
+	UPROPERTY()
+	FGameSettings GameSettings;
 };

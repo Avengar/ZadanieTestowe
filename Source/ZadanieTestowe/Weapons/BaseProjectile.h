@@ -23,6 +23,9 @@ protected:
 	UFUNCTION()
 	void OnProjectileHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
+	UFUNCTION()
+	void DestroyProjectile();
+
 public:
 	/**Set on spawn. How fast projectile will fly*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
@@ -40,4 +43,12 @@ protected:
 	/**How much damage we will deal on impact with enemy*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	int32 ProjectileDamage;
+
+	/**How long projectile will exist in seconds before being destroyed*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float ProjectileLifeSpan;
+
+private:
+	/**Timer handle used for destroying projectile after lifespan expires*/
+	FTimerHandle m_lifespanTimerHandle;
 };
