@@ -32,7 +32,7 @@ EBTNodeResult::Type UBTT_GetNextTarget::ExecuteTask(UBehaviorTreeComponent& Owne
 	
 	if(AliveEnemies.IsValidIndex(0))
 	{
-		int32 enemyIndex = FMath::RandRange(0,AliveEnemies.Max());
+		int32 enemyIndex = FMath::RandRange(0,AliveEnemies.Num()-1);
 		pBlackboardComponent->SetValueAsObject(TargetEnemy.SelectedKeyName, AliveEnemies[enemyIndex]);
 	
 		return EBTNodeResult::Succeeded;

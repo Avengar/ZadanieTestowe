@@ -7,6 +7,14 @@ ABaseGameMode::ABaseGameMode()
 {
 	//Set our GameState class as default
 	GameStateClass = ABaseGameState::StaticClass();
+
+	//Set defaults
+	GameSettings.EnemyHealth = 100;
+	GameSettings.ProjectileDamage = 50;
+	GameSettings.EnemyMovementSpeed = 600.f;
+	GameSettings.NumberOfEnemies = 5;
+	GameSettings.PlayerAttackRange = 500.f;
+	GameSettings.PlayerMovementSpeed = 700.f;
 }
 
 void ABaseGameMode::GetGameplaySettings_Implementation(FGameSettings& OutGameSettings) 
