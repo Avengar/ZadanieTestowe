@@ -16,11 +16,15 @@ public:
 	// Sets default values for this actor's properties
 	ABaseWeapon();
 
-protected:
-	
 	/**Function spawns projectile and starts cooldown timer*/
 	UFUNCTION(BlueprintCallable)
 	void FireWeapon();
+
+protected:
+
+	/**When cooldown timer is finished, prepare weapon to shoot*/
+	UFUNCTION()
+	void ResetWeaponCooldown();
 	
 protected:
 	/**Projectile class to spawn when shooting*/
@@ -37,4 +41,7 @@ protected:
 	/**Location at which we spawn projectile*/
 	UPROPERTY(VisibleAnywhere,BlueprintReadWrite)
 	USceneComponent* ProjectileSpawnPoint;
+
+private:
+	FTimerHandle m_weaponCooldownTimerHandle;
 };

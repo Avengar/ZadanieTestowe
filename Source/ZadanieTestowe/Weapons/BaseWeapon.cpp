@@ -15,8 +15,11 @@ ABaseWeapon::ABaseWeapon()
 	//ProjectileSpawnPointSetup
 	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("ProjectileSpawnPoint"));
 	ProjectileSpawnPoint->SetupAttachment(WeaponMesh);
+
+	//Set defaults
+	FireWeaponCooldown = 0.75f;
 }
-//TODO:Set cooldown timer
+
 void ABaseWeapon::FireWeapon()
 {
 	//Check if we have valid projectile class
@@ -25,9 +28,22 @@ void ABaseWeapon::FireWeapon()
 		const FString logErrorMessage = FString::Printf(TEXT("Projectile class not provided in  : %s"), *this->GetName());
 		UE_LOG(LogTemp, Warning, TEXT("%s"), *logErrorMessage);
 	}
-	
-	FActorSpawnParameters spawnParameters;
-	spawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-	GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, ProjectileSpawnPoint->GetComponentLocation(), ProjectileSpawnPoint->GetComponentRotation(), spawnParameters);
+	//if timer is valid then we already shot recently
+	if(m_weaponCooldownTimerHandle.IsValid() == false)
+	{
+		GetWorld()->GetTimerManager().SetTimer(m_weaponCooldownTimerHandle, this,&ABaseWeapon::ResetWeaponCooldown, FireWeaponCooldown, false);
+		
+		FActorSpawnParameters spawnParameters;
+		spawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+		GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, ProjectileSpawnPoint->GetComponentLocation(), ProjectileSpawnPoint->GetComponentRotation(), spawnParameters);
+	}
+}
+
+void ABaseWeapon::ResetWeaponCooldown()
+{
+	if(m_weaponCooldownTimerHandle.IsValid())
+	{
+		m_weaponCooldownTimerHandle.Invalidate();
+	}
 }
 

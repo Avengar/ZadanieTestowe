@@ -17,10 +17,12 @@ class ZADANIETESTOWE_API APlayerCharacter : public ABaseCharacter
 public:
 	
 	APlayerCharacter();
+
+	void FireWeapon();
 	
 protected:
-	
- void BeginPlay() override;
+
+	void BeginPlay() override;
 	
 protected:
 	/**Weapon class to spawn at the start of the game*/

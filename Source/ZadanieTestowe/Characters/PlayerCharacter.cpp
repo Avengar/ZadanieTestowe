@@ -27,3 +27,13 @@ void APlayerCharacter::BeginPlay()
 	
 	AttachedWeapon->AttachToComponent(this->GetMesh(),FAttachmentTransformRules::SnapToTargetNotIncludingScale, WeaponSocketName);
 }
+
+void APlayerCharacter::FireWeapon()
+{
+	if(IsValid(AttachedWeapon) == false)
+	{
+		return;
+	}
+
+	AttachedWeapon->FireWeapon();
+}
