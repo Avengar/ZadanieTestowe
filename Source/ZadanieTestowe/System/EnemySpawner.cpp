@@ -3,6 +3,9 @@
 
 #include "EnemySpawner.h"
 
+#include "GameStateInterface.h"
+#include "GameFramework/GameStateBase.h"
+
 
 AEnemySpawner::AEnemySpawner()
 {
@@ -20,7 +23,7 @@ AEnemySpawner::AEnemySpawner()
 	
 }
 
-ABaseCharacter* AEnemySpawner::SpawnEnemy(TSubclassOf<ABaseCharacter> EnemyClassToSpawn)
+AEnemyCharacter* AEnemySpawner::SpawnEnemy()
 {
 	//Validate enemy class
 	if(IsValid(EnemyClassToSpawn) == false)
@@ -34,7 +37,7 @@ ABaseCharacter* AEnemySpawner::SpawnEnemy(TSubclassOf<ABaseCharacter> EnemyClass
 	FActorSpawnParameters spawnParameters;
 	spawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 
-	ABaseCharacter* pSpawnedEnemy = GetWorld()->SpawnActor<ABaseCharacter>(EnemyClassToSpawn,this->GetActorLocation(),this->GetActorRotation(), spawnParameters);
+	AEnemyCharacter* pSpawnedEnemy = GetWorld()->SpawnActor<AEnemyCharacter>(EnemyClassToSpawn,this->GetActorLocation(),this->GetActorRotation(), spawnParameters);
 
 	//Spawn was successful
 	if(IsValid(pSpawnedEnemy))
@@ -46,5 +49,17 @@ ABaseCharacter* AEnemySpawner::SpawnEnemy(TSubclassOf<ABaseCharacter> EnemyClass
 	const FString logErrorMessage = FString::Printf(TEXT("Enemy spawn failed at : %s"), *this->GetName());
 	UE_LOG(LogTemp, Warning, TEXT("%s"), *logErrorMessage);
 	return nullptr;
+}
+
+void AEnemySpawner::BeginPlay()
+{
+	AGameStateBase* pGameState = GetWorld()->GetGameState();
+
+	//Register spawner in game state
+	if(IsValid(pGameState) && pGameState->Implements<UGameStateInterface>())
+	{
+		IGameStateInterface::Execute_AddSpawner(pGameState, this);
+	}
+	Super::BeginPlay();
 }
 

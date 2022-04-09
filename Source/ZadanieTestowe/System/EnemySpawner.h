@@ -7,6 +7,7 @@
 #include "ZadanieTestowe/Characters/BaseCharacter.h"
 #include "Components/ArrowComponent.h"
 #include "Components/BillboardComponent.h"
+#include "ZadanieTestowe/Characters/EnemyCharacter.h"
 #include "EnemySpawner.generated.h"
 
 UCLASS()
@@ -20,7 +21,10 @@ public:
 
 	/**Spawns enemy of given class. Return nullptr if spawning was not successful*/
 	UFUNCTION(BlueprintCallable)
-	ABaseCharacter* SpawnEnemy(TSubclassOf<ABaseCharacter> EnemyClassToSpawn);
+	AEnemyCharacter* SpawnEnemy();
+protected:
+	
+	void BeginPlay() override;
 	
 protected:
 	/**Arrow used for clarity on level, to determine spawn direction*/
@@ -30,4 +34,7 @@ protected:
 	/**Billboard component for easier spawner identification on levels*/
 	UPROPERTY(EditAnywhere)
 	UBillboardComponent* SpawnerIcon;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AEnemyCharacter> EnemyClassToSpawn;
 };

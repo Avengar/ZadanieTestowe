@@ -3,6 +3,9 @@
 
 #include "EnemyCharacter.h"
 
+#include "GameFramework/GameStateBase.h"
+#include "ZadanieTestowe/System/GameStateInterface.h"
+
 AEnemyCharacter::AEnemyCharacter() : Super()
 {
 	HealthPoints = 100;
@@ -21,5 +24,10 @@ void AEnemyCharacter::DealDamage_Implementation(int32 DamageValue)
 
 void AEnemyCharacter::Death()
 {
+	AGameStateBase* pGameState = GetWorld()->GetGameState();
+	if(IsValid(pGameState) && pGameState->Implements<UGameStateInterface>())
+	{
+		IGameStateInterface::Execute_RemoveAliveEnemy(pGameState, this);
+	}
 	this->Destroy();
 }
