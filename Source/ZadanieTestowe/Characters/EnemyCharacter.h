@@ -20,6 +20,9 @@ public:
 	AEnemyCharacter();
 
 protected:
+
+	void BeginPlay() override;
+	
 	/**Apply damage, DamageInterfaceOverride, blueprint callable for debug purposes*/
 	UFUNCTION(BlueprintCallable)
 	virtual void DealDamage_Implementation(int32 DamageValue) override;
@@ -29,7 +32,11 @@ protected:
 
 
 protected:
-	/**Standard HP value. If it reaches 0 enemy is dead*/
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite)
+	float MaximumHealth;
+	
+	/**Current HP value. If it reaches 0 enemy is dead*/
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
-	int32 HealthPoints;
+	float CurrentHealthPoints;
 };

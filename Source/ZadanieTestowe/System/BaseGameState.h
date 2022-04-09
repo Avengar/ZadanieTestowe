@@ -31,6 +31,8 @@ public:
 
 	void GetAliveEnemies_Implementation(TArray<AEnemyCharacter*>& OutAliveEnemies) override;
 
+	 void GetCurrentGameSettings_Implementation(FGameSettings& OutGameSettings) override;
+
 	/**~GameStateInterface*/
 
 protected:

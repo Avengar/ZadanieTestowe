@@ -8,15 +8,30 @@
 
 AEnemyCharacter::AEnemyCharacter() : Super()
 {
-	HealthPoints = 100;
+	//Set defaults
+	MaximumHealth = 100;
+}
+
+void AEnemyCharacter::BeginPlay()
+{
+	AGameStateBase* pGameState = GetWorld()->GetGameState();
+	
+	if(IsValid(pGameState) && pGameState->Implements<UGameStateInterface>())
+	{
+		FGameSettings gameSettings;
+		IGameStateInterface::Execute_GetCurrentGameSettings(pGameState, gameSettings);
+		MaximumHealth = gameSettings.EnemyHealth;
+		CurrentHealthPoints = MaximumHealth;
+	}
+	Super::BeginPlay();
 }
 
 void AEnemyCharacter::DealDamage_Implementation(int32 DamageValue)
 {
-	HealthPoints = HealthPoints - DamageValue;
+	CurrentHealthPoints = CurrentHealthPoints - DamageValue;
 	
 	//We want to kill this enemy now, since we lost all HP
-	if(HealthPoints <= 0)
+	if(CurrentHealthPoints <= 0)
 	{
 		Death();
 	}

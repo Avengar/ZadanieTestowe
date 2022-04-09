@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "EnemySpawner.h"
+#include "GameplaySettingsInterface.h"
 #include "UObject/Interface.h"
 #include "ZadanieTestowe/Characters/EnemyCharacter.h"
 #include "GameStateInterface.generated.h"
@@ -40,5 +41,9 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Game")
 	void StartGame();
 	virtual void StartGame_Implementation() {};
+
+	UFUNCTION(BlueprintNativeEvent,BlueprintCallable,  Category = "Game")
+	void GetCurrentGameSettings(FGameSettings& OutGameSettings);
+	virtual void GetCurrentGameSettings_Implementation(FGameSettings& OutGameSettings) {};
 	
 };

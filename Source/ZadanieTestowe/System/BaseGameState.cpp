@@ -32,6 +32,11 @@ void ABaseGameState::GetAliveEnemies_Implementation(TArray<AEnemyCharacter*>& Ou
 	OutAliveEnemies = AliveEnemies;
 }
 
+void ABaseGameState::GetCurrentGameSettings_Implementation(FGameSettings& OutGameSettings)
+{
+	OutGameSettings = CurrentGameSettings;
+}
+
 void ABaseGameState::AddSpawner_Implementation(AEnemySpawner* AddedSpawner)
 {
 	if(IsValid(AddedSpawner) == false)

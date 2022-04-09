@@ -34,7 +34,7 @@ struct FGameSettings
 
 	/**Amount of health that each enemy spawns with*/
 	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "GameSetup")
-	int32 EnemyHealth;
+	float EnemyHealth;
 };
 
 // This class does not need to be modified.
