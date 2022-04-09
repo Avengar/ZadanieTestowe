@@ -7,7 +7,7 @@
 #include "GameFramework/GameMode.h"
 #include "Kismet/GameplayStatics.h"
 
-void ABaseGameState::StartGame()
+void ABaseGameState::StartGame_Implementation()
 {
 	AGameModeBase* pGameMode = UGameplayStatics::GetGameMode(GetWorld());
 	
@@ -25,8 +25,6 @@ void ABaseGameState::StartGame()
 			AliveEnemies.AddUnique(EnemySpawners[i]->SpawnEnemy());
 		}
 	}
-
-	//SpawnPlayer
 }
 
 void ABaseGameState::GetAliveEnemies_Implementation(TArray<AEnemyCharacter*>& OutAliveEnemies)

@@ -36,5 +36,9 @@ public:
 	UFUNCTION(BlueprintNativeEvent, Category = "Enemy")
 	void GetAliveEnemies(TArray<AEnemyCharacter*>& OutAliveEnemies);
 	virtual void GetAliveEnemies_Implementation(TArray<AEnemyCharacter*>& OutAliveEnemies) {};
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Game")
+	void StartGame();
+	virtual void StartGame_Implementation() {};
 	
 };

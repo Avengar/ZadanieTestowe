@@ -18,11 +18,11 @@ class ZADANIETESTOWE_API ABaseGameState : public AGameStateBase, public IGameSta
 	GENERATED_BODY()
 
 public:
-	/**Spawn enemies and start game loop*/
-	UFUNCTION(BlueprintCallable)
-	void StartGame();
 	
 	/**GameStateInterface*/
+
+	/**Spawn enemies and start game loop*/
+	void StartGame_Implementation() override;
 	
 	/**Register spawner in EnemySpawners array*/
 	void AddSpawner_Implementation(AEnemySpawner* AddedSpawner) override;
