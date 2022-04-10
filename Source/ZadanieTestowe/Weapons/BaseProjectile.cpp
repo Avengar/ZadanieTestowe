@@ -2,8 +2,9 @@
 
 
 #include "BaseProjectile.h"
-
+#include "GameFramework/GameStateBase.h"
 #include "ZadanieTestowe/System/DamageInterface.h"
+#include "ZadanieTestowe/System/GameStateInterface.h"
 
 // Sets default values
 ABaseProjectile::ABaseProjectile()
@@ -41,6 +42,15 @@ void ABaseProjectile::BeginPlay()
 {
 	//bind timer so we can destroy projectile if it doesn't hit anything
 	GetWorld()->GetTimerManager().SetTimer(m_lifespanTimerHandle, this, &ABaseProjectile::DestroyProjectile, ProjectileLifeSpan, false);
+
+	AGameStateBase* pGameState = GetWorld()->GetGameState();
+	
+	if(IsValid(pGameState) && pGameState->Implements<UGameStateInterface>())
+	{
+		FGameSettings gameSettings;
+		IGameStateInterface::Execute_GetCurrentGameSettings(pGameState, gameSettings);
+		ProjectileDamage = gameSettings.ProjectileDamage;
+	}
 	Super::BeginPlay();
 }
 
