@@ -30,11 +30,12 @@ public:
 	/**Set on spawn. How fast projectile will fly*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	float ProjectileSpeed;
-	
-protected:
+
 	/**Component responsible for movement of this actor*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	UProjectileMovementComponent* ProjectileMovementComponent;
+	
+protected:
 
 	/**Mesh representing projectile in game world*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)

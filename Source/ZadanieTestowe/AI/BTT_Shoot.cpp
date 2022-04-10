@@ -21,10 +21,10 @@ EBTNodeResult::Type UBTT_Shoot::ExecuteTask(UBehaviorTreeComponent& OwnerComp, u
 	}
 
 	APlayerCharacter* pPlayerCharacter = Cast<APlayerCharacter>(pBlackboardComponent->GetValueAsObject(SelfActor.SelectedKeyName));
-
-	if(IsValid(pPlayerCharacter))
+	AActor* pTargetActor = Cast<AActor>(pBlackboardComponent->GetValueAsObject(TargetEnemy.SelectedKeyName));
+	if(IsValid(pPlayerCharacter) && IsValid(pTargetActor))
 	{
-		pPlayerCharacter->FireWeapon();
+		pPlayerCharacter->FireWeapon(pTargetActor);
 		return EBTNodeResult::Succeeded;
 	}
 

@@ -19,7 +19,7 @@ public:
 	APlayerCharacter();
 	
 	/**Fire currently attached weapon*/
-	void FireWeapon();
+	void FireWeapon(AActor* TargetActor);
 	
 protected:
 

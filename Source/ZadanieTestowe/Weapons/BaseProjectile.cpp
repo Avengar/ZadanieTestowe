@@ -33,6 +33,7 @@ ABaseProjectile::ABaseProjectile()
 	//Projectile defaults
 	ProjectileDamage = 50;
 	ProjectileLifeSpan = 8.f;
+	ProjectileSpeed = ProjectileMovementComponent->InitialSpeed;
 }
 
 // Called when the game starts or when spawned

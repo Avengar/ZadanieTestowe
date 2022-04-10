@@ -3,6 +3,8 @@
 
 #include "BaseWeapon.h"
 
+#include "Kismet/KismetMathLibrary.h"
+
 // Sets default values
 ABaseWeapon::ABaseWeapon()
 {
@@ -20,7 +22,7 @@ ABaseWeapon::ABaseWeapon()
 	FireWeaponCooldown = 0.75f;
 }
 
-void ABaseWeapon::FireWeapon()
+void ABaseWeapon::FireWeapon(AActor* TargetEnemy)
 {
 	//Check if we have valid projectile class
 	if(IsValid(ProjectileClass) == false)
@@ -35,7 +37,11 @@ void ABaseWeapon::FireWeapon()
 		
 		FActorSpawnParameters spawnParameters;
 		spawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-		GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, ProjectileSpawnPoint->GetComponentLocation(), ProjectileSpawnPoint->GetComponentRotation(), spawnParameters);
+		
+		//calculate rotation between weapon owner and target to set proper velocity
+		FRotator velocityDirection = UKismetMathLibrary::FindLookAtRotation(GetOwner()->GetActorLocation(), TargetEnemy->GetActorLocation());
+		ABaseProjectile* pSpawnedProjectile = GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, ProjectileSpawnPoint->GetComponentLocation(), ProjectileSpawnPoint->GetComponentRotation(), spawnParameters);
+		pSpawnedProjectile->ProjectileMovementComponent->Velocity = UKismetMathLibrary::Conv_RotatorToVector(velocityDirection)* pSpawnedProjectile->ProjectileSpeed;
 	}
 }
 

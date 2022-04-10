@@ -26,4 +26,7 @@ public:
 	/**Provide self actor to call shoot function*/
 	UPROPERTY(EditAnywhere)
 	struct FBlackboardKeySelector SelfActor;
+
+	UPROPERTY(EditAnywhere)
+	struct FBlackboardKeySelector TargetEnemy;
 };

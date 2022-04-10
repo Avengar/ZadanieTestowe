@@ -41,6 +41,7 @@ void APlayerCharacter::BeginPlay()
 	}
 	
 	AttachedWeapon->AttachToComponent(this->GetMesh(),FAttachmentTransformRules::SnapToTargetNotIncludingScale, WeaponSocketName);
+	AttachedWeapon->SetOwner(this);
 
 	Super::BeginPlay();
 }
@@ -54,12 +55,12 @@ void APlayerCharacter::Destroyed()
 	Super::Destroyed();
 }
 
-void APlayerCharacter::FireWeapon()
+void APlayerCharacter::FireWeapon(AActor* TargetActor)
 {
 	if(IsValid(AttachedWeapon) == false)
 	{
 		return;
 	}
 
-	AttachedWeapon->FireWeapon();
+	AttachedWeapon->FireWeapon(TargetActor);
 }
