@@ -25,11 +25,11 @@ public:
 	void StartGame_Implementation() override;
 	
 	/**Register spawner in EnemySpawners array*/
-	void AddSpawner_Implementation(AEnemySpawner* AddedSpawner) override;
+	void AddSpawner_Implementation(ABaseSpawner* AddedSpawner) override;
 
-	void RemoveAliveEnemy_Implementation(AEnemyCharacter* RemovedEnemy) override;
+	void RemoveAliveEnemy_Implementation(ABaseCharacter* RemovedEnemy) override;
 
-	void GetAliveEnemies_Implementation(TArray<AEnemyCharacter*>& OutAliveEnemies) override;
+	void GetAliveEnemies_Implementation(TArray<ABaseCharacter*>& OutAliveEnemies) override;
 
 	 void GetCurrentGameSettings_Implementation(FGameSettings& OutGameSettings) override;
 
@@ -39,14 +39,21 @@ protected:
 	/**Called when last enemy is removed from AliveEnemies array, ends current game*/
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void EndGame();
-	virtual void EndGame_Implementation() {};
+	virtual void EndGame_Implementation();
+	
 protected:
 	/**Array holding currently alive enemies*/
 	UPROPERTY()
-	TArray<AEnemyCharacter*> AliveEnemies;
+	TArray<ABaseCharacter*> AliveEnemies;
 
 	UPROPERTY()
-	TArray<AEnemySpawner*> EnemySpawners;
+	TArray<ABaseSpawner*> EnemySpawners;
+
+	UPROPERTY()
+	ABaseSpawner* PlayerSpawner;
+
+	UPROPERTY()
+	ABaseCharacter* PlayerReference;
 
 	UPROPERTY()
 	FGameSettings CurrentGameSettings;

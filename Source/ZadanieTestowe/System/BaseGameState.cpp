@@ -22,12 +22,20 @@ void ABaseGameState::StartGame_Implementation()
 	{
 		if(EnemySpawners.IsValidIndex(i))
 		{
-			AliveEnemies.AddUnique(EnemySpawners[i]->SpawnEnemy());
+			AliveEnemies.AddUnique(EnemySpawners[i]->SpawnCharacter());
 		}
 	}
+
+	if(IsValid(PlayerSpawner) == false)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Player spawner is not valid"));
+		return;
+	}
+	
+	PlayerReference = PlayerSpawner->SpawnCharacter();
 }
 
-void ABaseGameState::GetAliveEnemies_Implementation(TArray<AEnemyCharacter*>& OutAliveEnemies)
+void ABaseGameState::GetAliveEnemies_Implementation(TArray<ABaseCharacter*>& OutAliveEnemies)
 {
 	OutAliveEnemies = AliveEnemies;
 }
@@ -37,17 +45,29 @@ void ABaseGameState::GetCurrentGameSettings_Implementation(FGameSettings& OutGam
 	OutGameSettings = CurrentGameSettings;
 }
 
-void ABaseGameState::AddSpawner_Implementation(AEnemySpawner* AddedSpawner)
+void ABaseGameState::EndGame_Implementation()
+{
+	PlayerReference->Destroy();
+}
+
+void ABaseGameState::AddSpawner_Implementation(ABaseSpawner* AddedSpawner)
 {
 	if(IsValid(AddedSpawner) == false)
 	{
 		return;
 	}
 
-	EnemySpawners.AddUnique(AddedSpawner);
+	if(AddedSpawner->GetIsPlayerSpawner() == false)
+	{
+		EnemySpawners.AddUnique(AddedSpawner);
+	}
+	else
+	{
+		PlayerSpawner = AddedSpawner;
+	}
 }
 
-void ABaseGameState::RemoveAliveEnemy_Implementation(AEnemyCharacter* RemovedEnemy)
+void ABaseGameState::RemoveAliveEnemy_Implementation(ABaseCharacter* RemovedEnemy)
 {
 	if(IsValid(RemovedEnemy) == false)
 	{

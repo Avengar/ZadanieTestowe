@@ -45,6 +45,12 @@ void APlayerCharacter::BeginPlay()
 	Super::BeginPlay();
 }
 
+void APlayerCharacter::Destroyed()
+{
+	AttachedWeapon->Destroy();
+	Super::Destroyed();
+}
+
 void APlayerCharacter::FireWeapon()
 {
 	if(IsValid(AttachedWeapon) == false)

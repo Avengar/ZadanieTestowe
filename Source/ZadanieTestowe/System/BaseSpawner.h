@@ -8,20 +8,22 @@
 #include "Components/ArrowComponent.h"
 #include "Components/BillboardComponent.h"
 #include "ZadanieTestowe/Characters/EnemyCharacter.h"
-#include "EnemySpawner.generated.h"
+#include "BaseSpawner.generated.h"
 
 UCLASS()
-class ZADANIETESTOWE_API AEnemySpawner : public AActor
+class ZADANIETESTOWE_API ABaseSpawner : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AEnemySpawner();
+	ABaseSpawner();
 
 	/**Spawns enemy of given class. Return nullptr if spawning was not successful*/
 	UFUNCTION(BlueprintCallable)
-	AEnemyCharacter* SpawnEnemy();
+	ABaseCharacter* SpawnCharacter();
+
+	bool GetIsPlayerSpawner();
 protected:
 	
 	void BeginPlay() override;
@@ -36,5 +38,8 @@ protected:
 	UBillboardComponent* SpawnerIcon;
 
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<AEnemyCharacter> EnemyClassToSpawn;
+	TSubclassOf<ABaseCharacter> CharacterClassToSpawn;
+
+	UPROPERTY(EditAnywhere)
+	bool bIsPlayerSpawner;
 };

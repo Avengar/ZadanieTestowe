@@ -21,7 +21,7 @@ EBTNodeResult::Type UBTT_GetNextTarget::ExecuteTask(UBehaviorTreeComponent& Owne
 		return EBTNodeResult::Failed;
 	}
 	
-	TArray<AEnemyCharacter*> AliveEnemies;
+	TArray<ABaseCharacter*> AliveEnemies;
 	AGameStateBase* pGameState = GetWorld()->GetGameState();
 	if(IsValid(pGameState) == false || pGameState->Implements<UGameStateInterface>() == false)
 	{

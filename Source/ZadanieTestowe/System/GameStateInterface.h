@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "EnemySpawner.h"
+#include "BaseSpawner.h"
 #include "GameplaySettingsInterface.h"
 #include "UObject/Interface.h"
 #include "ZadanieTestowe/Characters/EnemyCharacter.h"
@@ -27,16 +27,16 @@ public:
 
 	/**Used to register spawners*/
 	UFUNCTION(BlueprintNativeEvent, Category = "Spawner")
-	void AddSpawner(AEnemySpawner* AddedSpawner);
-	virtual void AddSpawner_Implementation(AEnemySpawner* AddedSpawner) {};
+	void AddSpawner(ABaseSpawner* AddedSpawner);
+	virtual void AddSpawner_Implementation(ABaseSpawner* AddedSpawner) {};
 	
 	UFUNCTION(BlueprintNativeEvent, Category = "Enemy")
-	void RemoveAliveEnemy(AEnemyCharacter* RemovedEnemy);
-	virtual void RemoveAliveEnemy_Implementation(AEnemyCharacter* RemovedEnemy) {};
+	void RemoveAliveEnemy(ABaseCharacter* RemovedEnemy);
+	virtual void RemoveAliveEnemy_Implementation(ABaseCharacter* RemovedEnemy) {};
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Enemy")
-	void GetAliveEnemies(TArray<AEnemyCharacter*>& OutAliveEnemies);
-	virtual void GetAliveEnemies_Implementation(TArray<AEnemyCharacter*>& OutAliveEnemies) {};
+	void GetAliveEnemies(TArray<ABaseCharacter*>& OutAliveEnemies);
+	virtual void GetAliveEnemies_Implementation(TArray<ABaseCharacter*>& OutAliveEnemies) {};
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Game")
 	void StartGame();

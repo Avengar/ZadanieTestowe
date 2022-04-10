@@ -24,6 +24,8 @@ public:
 protected:
 
 	virtual void BeginPlay() override;
+
+	void Destroyed() override;
 	
 protected:
 	/**Weapon class to spawn at the start of the game*/
