@@ -17,7 +17,7 @@ public:
 	ABaseWeapon();
 
 	/**Function spawns projectile and starts cooldown timer*/
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION()
 	void FireWeapon(AActor* TargetEnemy);
 
 protected:

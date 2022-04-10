@@ -7,7 +7,7 @@
 #include "GameFramework/GameStateBase.h"
 #include "ZadanieTestowe/System/GameStateInterface.h"
 
-AEnemyCharacter::AEnemyCharacter() : Super()
+AEnemyCharacter::AEnemyCharacter()
 {
 	//Set defaults
 	MaximumHealth = 100;
@@ -15,9 +15,11 @@ AEnemyCharacter::AEnemyCharacter() : Super()
 
 void AEnemyCharacter::BeginPlay()
 {
+	Super::BeginPlay();
+	
 	AGameStateBase* pGameState = GetWorld()->GetGameState();
 	
-	if(IsValid(pGameState) && pGameState->Implements<UGameStateInterface>())
+	if(pGameState->Implements<UGameStateInterface>())
 	{
 		FGameSettings gameSettings;
 		IGameStateInterface::Execute_GetCurrentGameSettings(pGameState, gameSettings);
@@ -25,12 +27,17 @@ void AEnemyCharacter::BeginPlay()
 		CurrentHealthPoints = MaximumHealth;
 		GetCharacterMovement()->MaxWalkSpeed = gameSettings.EnemyMovementSpeed;
 	}
-	Super::BeginPlay();
 }
 
 void AEnemyCharacter::DealDamage_Implementation(int32 DamageValue)
 {
-	CurrentHealthPoints = CurrentHealthPoints - DamageValue;
+
+	if(CurrentHealthPoints <= 0)
+	{
+		return;
+	}
+	
+	CurrentHealthPoints -= FMath::Abs(DamageValue);
 	
 	//We want to kill this enemy now, since we lost all HP
 	if(CurrentHealthPoints <= 0)
@@ -42,7 +49,7 @@ void AEnemyCharacter::DealDamage_Implementation(int32 DamageValue)
 void AEnemyCharacter::Death()
 {
 	AGameStateBase* pGameState = GetWorld()->GetGameState();
-	if(IsValid(pGameState) && pGameState->Implements<UGameStateInterface>())
+	if(pGameState->Implements<UGameStateInterface>())
 	{
 		IGameStateInterface::Execute_RemoveAliveEnemy(pGameState, this);
 	}

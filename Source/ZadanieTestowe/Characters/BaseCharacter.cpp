@@ -2,7 +2,6 @@
 
 
 #include "BaseCharacter.h"
-
 #include "AIController.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -18,12 +17,6 @@ ABaseCharacter::ABaseCharacter()
 	AutoPossessAI = EAutoPossessAI::Spawned;
 }
 
-// Called when the game starts or when spawned
-void ABaseCharacter::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
 void ABaseCharacter::Restart()
 {
 	//Get AIController & BlackboardComponent
@@ -34,12 +27,5 @@ void ABaseCharacter::Restart()
 	pAIController->UseBlackboard(BlackboardData,pBlackboardComponent);
 	pAIController->RunBehaviorTree(BehaviourTree);
 	Super::Restart();
-}
-
-// Called every frame
-void ABaseCharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
 }
 

@@ -44,12 +44,4 @@ protected:
 	/**How much damage we will deal on impact with enemy*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	int32 ProjectileDamage;
-
-	/**How long projectile will exist in seconds before being destroyed*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float ProjectileLifeSpan;
-
-private:
-	/**Timer handle used for destroying projectile after lifespan expires*/
-	FTimerHandle m_lifespanTimerHandle;
 };

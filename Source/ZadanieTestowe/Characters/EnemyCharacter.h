@@ -24,7 +24,6 @@ protected:
 	void BeginPlay() override;
 	
 	/**Apply damage, DamageInterfaceOverride, blueprint callable for debug purposes*/
-	UFUNCTION(BlueprintCallable)
 	virtual void DealDamage_Implementation(int32 DamageValue) override;
 	
 	/**Handle enemy death logic. Called by DealDamage when health reaches 0*/
@@ -32,10 +31,10 @@ protected:
 
 protected:
 
-	UPROPERTY(VisibleAnywhere,BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite)
 	float MaximumHealth;
 	
 	/**Current HP value. If it reaches 0 enemy is dead*/
-	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly)
 	float CurrentHealthPoints;
 };

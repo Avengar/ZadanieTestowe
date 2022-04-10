@@ -7,17 +7,19 @@
 #include "GameFramework/GameState.h"
 #include "ZadanieTestowe/System/GameStateInterface.h"
 
-APlayerCharacter::APlayerCharacter() :Super()
+APlayerCharacter::APlayerCharacter()
 {
+	//Set defaults
 	WeaponSocketName = "weapon_r";
 }
 
 void APlayerCharacter::BeginPlay()
 {
+	Super::BeginPlay();
 	
 	AGameStateBase* pGameState = GetWorld()->GetGameState();
 	
-	if(IsValid(pGameState) && pGameState->Implements<UGameStateInterface>())
+	if(pGameState->Implements<UGameStateInterface>())
 	{
 		FGameSettings gameSettings;
 		IGameStateInterface::Execute_GetCurrentGameSettings(pGameState, gameSettings);
@@ -26,7 +28,7 @@ void APlayerCharacter::BeginPlay()
 	
 	if(IsValid(WeaponClass) == false)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Weapon class not set in PLayerCharacter"));
+		UE_LOG(LogTemp, Error, TEXT("Weapon class not set in PLayerCharacter"));
 		return;
 	}
 	
@@ -37,22 +39,22 @@ void APlayerCharacter::BeginPlay()
 	
 	if(IsValid(AttachedWeapon) == false)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Weapon spawn failed for player character"));
+		UE_LOG(LogTemp, Error, TEXT("Weapon spawn failed for player character"));
+		return;
 	}
 	
 	AttachedWeapon->AttachToComponent(this->GetMesh(),FAttachmentTransformRules::SnapToTargetNotIncludingScale, WeaponSocketName);
 	AttachedWeapon->SetOwner(this);
-
-	Super::BeginPlay();
 }
 
 void APlayerCharacter::Destroyed()
 {
+	Super::Destroyed();
+	
 	if(IsValid(AttachedWeapon))
 	{
 		AttachedWeapon->Destroy();
 	}
-	Super::Destroyed();
 }
 
 void APlayerCharacter::FireWeapon(AActor* TargetActor)

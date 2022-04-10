@@ -3,9 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BehaviorTree/BlackboardComponent.h"
 #include "EnvironmentQuery/EnvQuery.h"
-
 #include "GameFramework/Character.h"
 #include "BaseCharacter.generated.h"
 
@@ -18,12 +16,7 @@ public:
 	// Sets default values for this character's properties
 	ABaseCharacter();
 
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 
 	//Restart function called when Pawn is being possesed
 	virtual void Restart() override;

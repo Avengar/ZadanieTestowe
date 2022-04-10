@@ -52,14 +52,15 @@ ABaseCharacter* ABaseSpawner::SpawnCharacter()
 
 void ABaseSpawner::BeginPlay()
 {
+	Super::BeginPlay();
+	
 	AGameStateBase* pGameState = GetWorld()->GetGameState();
 
 	//Register spawner in game state
-	if(IsValid(pGameState) && pGameState->Implements<UGameStateInterface>())
+	if(pGameState->Implements<UGameStateInterface>())
 	{
 		IGameStateInterface::Execute_AddSpawner(pGameState, this);
 	}
-	Super::BeginPlay();
 }
 
 bool ABaseSpawner::GetIsPlayerSpawner()

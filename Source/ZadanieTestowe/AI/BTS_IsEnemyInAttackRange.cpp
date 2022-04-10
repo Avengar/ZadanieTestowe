@@ -29,7 +29,7 @@ void UBTS_IsEnemyInAttackRange::TickNode(UBehaviorTreeComponent& OwnerComp, uint
 	AActor* pSelfActor = Cast<AActor>(pBlackboardComponent->GetValueAsObject(SelfReference.SelectedKeyName));
 	AActor* pEnemyActor = Cast<AActor>(pBlackboardComponent->GetValueAsObject(TargetEnemy.SelectedKeyName));
 	
-	if(IsValid(pSelfActor) && IsValid(pEnemyActor) == false)
+	if(IsValid(pSelfActor) == false || IsValid(pEnemyActor) == false)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("One of the actors  is invalid"));
 		pBlackboardComponent->SetValueAsBool(bCanShoot.SelectedKeyName, false);
@@ -38,7 +38,8 @@ void UBTS_IsEnemyInAttackRange::TickNode(UBehaviorTreeComponent& OwnerComp, uint
 	float measuerdDistance = FVector::Dist(pSelfActor->GetActorLocation(), pEnemyActor->GetActorLocation());
 
 	AGameStateBase* pGameState = GetWorld()->GetGameState();
-	if(IsValid(pGameState) == false && pGameState->Implements<UGameStateInterface>())
+	
+	if(IsValid(pGameState) == false || pGameState->Implements<UGameStateInterface>() == false)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("GameState is invalid or does not implement GameStateInterface"));
 		pBlackboardComponent->SetValueAsBool(bCanShoot.SelectedKeyName, false);
