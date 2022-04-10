@@ -47,7 +47,10 @@ void APlayerCharacter::BeginPlay()
 
 void APlayerCharacter::Destroyed()
 {
-	AttachedWeapon->Destroy();
+	if(IsValid(AttachedWeapon))
+	{
+		AttachedWeapon->Destroy();
+	}
 	Super::Destroyed();
 }
 
