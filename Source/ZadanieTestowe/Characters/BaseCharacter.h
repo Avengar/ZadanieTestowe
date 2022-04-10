@@ -37,12 +37,4 @@ protected:
 	/** Behaviour tree  used by character. */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category= "AISetup")
     UBehaviorTree* BehaviourTree;
-	
-	/**Movement speed used by CharacterMovement.*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AISetup")
-	float MovementSpeed;
-	
-	/**EQS reference used for searching desired movement location*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AISetup")
-	UEnvQuery* MovementEnvironmentalQuery;
 };

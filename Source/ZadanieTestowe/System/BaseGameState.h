@@ -36,6 +36,11 @@ public:
 	/**~GameStateInterface*/
 
 protected:
+	/**Called when last enemy is removed from AliveEnemies array, ends current game*/
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void EndGame();
+	virtual void EndGame_Implementation() {};
+protected:
 	/**Array holding currently alive enemies*/
 	UPROPERTY()
 	TArray<AEnemyCharacter*> AliveEnemies;

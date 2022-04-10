@@ -3,6 +3,7 @@
 
 #include "EnemyCharacter.h"
 
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/GameStateBase.h"
 #include "ZadanieTestowe/System/GameStateInterface.h"
 
@@ -22,6 +23,7 @@ void AEnemyCharacter::BeginPlay()
 		IGameStateInterface::Execute_GetCurrentGameSettings(pGameState, gameSettings);
 		MaximumHealth = gameSettings.EnemyHealth;
 		CurrentHealthPoints = MaximumHealth;
+		GetCharacterMovement()->MaxWalkSpeed = gameSettings.EnemyMovementSpeed;
 	}
 	Super::BeginPlay();
 }

@@ -30,7 +30,6 @@ protected:
 	/**Handle enemy death logic. Called by DealDamage when health reaches 0*/
 	void Death();
 
-
 protected:
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadWrite)

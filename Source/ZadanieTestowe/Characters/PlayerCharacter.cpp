@@ -3,16 +3,31 @@
 
 #include "PlayerCharacter.h"
 
-APlayerCharacter::APlayerCharacter()
+#include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/GameState.h"
+#include "ZadanieTestowe/System/GameStateInterface.h"
+
+APlayerCharacter::APlayerCharacter() :Super()
 {
 	WeaponSocketName = "weapon_r";
 }
 
 void APlayerCharacter::BeginPlay()
 {
+	
+	AGameStateBase* pGameState = GetWorld()->GetGameState();
+	
+	if(IsValid(pGameState) && pGameState->Implements<UGameStateInterface>())
+	{
+		FGameSettings gameSettings;
+		IGameStateInterface::Execute_GetCurrentGameSettings(pGameState, gameSettings);
+		GetCharacterMovement()->MaxWalkSpeed = gameSettings.PlayerMovementSpeed;
+	}
+	
 	if(IsValid(WeaponClass) == false)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Weapon class not set in PLayerCharacter"));
+		return;
 	}
 	
 	FActorSpawnParameters spawnParameters;
@@ -26,6 +41,8 @@ void APlayerCharacter::BeginPlay()
 	}
 	
 	AttachedWeapon->AttachToComponent(this->GetMesh(),FAttachmentTransformRules::SnapToTargetNotIncludingScale, WeaponSocketName);
+
+	Super::BeginPlay();
 }
 
 void APlayerCharacter::FireWeapon()

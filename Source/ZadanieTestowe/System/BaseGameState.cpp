@@ -60,4 +60,10 @@ void ABaseGameState::RemoveAliveEnemy_Implementation(AEnemyCharacter* RemovedEne
 	}
 
 	AliveEnemies.RemoveSingle(RemovedEnemy);
+
+	//Since there are no more enemies we want to reset the game
+	if(AliveEnemies.Num() == 0)
+	{
+		EndGame();
+	}
 }
