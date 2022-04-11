@@ -5,6 +5,7 @@
 
 #include "GameStateInterface.h"
 #include "GameFramework/GameStateBase.h"
+#include "Kismet/GameplayStatics.h"
 
 
 ABaseSpawner::ABaseSpawner()
@@ -53,7 +54,6 @@ ABaseCharacter* ABaseSpawner::SpawnCharacter()
 void ABaseSpawner::BeginPlay()
 {
 	Super::BeginPlay();
-	
 	AGameStateBase* pGameState = GetWorld()->GetGameState();
 
 	//Register spawner in game state

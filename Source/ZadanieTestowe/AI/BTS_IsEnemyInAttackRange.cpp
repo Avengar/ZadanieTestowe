@@ -5,6 +5,7 @@
 
 #include "BehaviorTree/BlackboardComponent.h"
 #include "GameFramework/GameStateBase.h"
+#include "Kismet/GameplayStatics.h"
 #include "ZadanieTestowe/System/GameStateInterface.h"
 
 UBTS_IsEnemyInAttackRange::UBTS_IsEnemyInAttackRange()
@@ -37,9 +38,9 @@ void UBTS_IsEnemyInAttackRange::TickNode(UBehaviorTreeComponent& OwnerComp, uint
 	}
 	float measuerdDistance = FVector::Dist(pSelfActor->GetActorLocation(), pEnemyActor->GetActorLocation());
 
-	AGameStateBase* pGameState = GetWorld()->GetGameState();
+	AGameModeBase* pGameMode = UGameplayStatics::GetGameMode(GetWorld());
 	
-	if(IsValid(pGameState) == false || pGameState->Implements<UGameStateInterface>() == false)
+	if(pGameMode->Implements<UGameplaySettingsInterface>() == false)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("GameState is invalid or does not implement GameStateInterface"));
 		pBlackboardComponent->SetValueAsBool(bCanShoot.SelectedKeyName, false);
@@ -47,7 +48,7 @@ void UBTS_IsEnemyInAttackRange::TickNode(UBehaviorTreeComponent& OwnerComp, uint
 	}
 	
 	FGameSettings gameSettings;
-	IGameStateInterface::Execute_GetCurrentGameSettings(pGameState, gameSettings);
+	IGameplaySettingsInterface::Execute_GetGameplaySettings(pGameMode, gameSettings);
 	
 	if(measuerdDistance <= gameSettings.PlayerAttackRange)
 	{

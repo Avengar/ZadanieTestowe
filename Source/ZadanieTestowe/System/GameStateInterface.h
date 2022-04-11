@@ -41,9 +41,5 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Game")
 	void StartGame();
 	virtual void StartGame_Implementation() {};
-
-	UFUNCTION(BlueprintNativeEvent,BlueprintCallable,  Category = "Game")
-	void GetCurrentGameSettings(FGameSettings& OutGameSettings);
-	virtual void GetCurrentGameSettings_Implementation(FGameSettings& OutGameSettings) {};
 	
 };

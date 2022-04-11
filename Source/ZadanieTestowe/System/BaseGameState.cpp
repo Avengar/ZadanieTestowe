@@ -10,15 +10,19 @@
 void ABaseGameState::StartGame_Implementation()
 {
 	AGameModeBase* pGameMode = UGameplayStatics::GetGameMode(GetWorld());
+	FGameSettings gameSettings;
 	
 	//get settings from game mode
-	if(pGameMode->Implements<UGameplaySettingsInterface>())
+	if(pGameMode->Implements<UGameplaySettingsInterface>() == false)
 	{
-		IGameplaySettingsInterface::Execute_GetGameplaySettings(pGameMode,CurrentGameSettings);
+		UE_LOG(LogTemp, Error, TEXT("Game mode does not implement UGameplaySettingsInterface!"));
+		return;
 	}
-
+	
+	IGameplaySettingsInterface::Execute_GetGameplaySettings(pGameMode,gameSettings);
+	
 	//Spawn enemies
-	for(int i=0; i < CurrentGameSettings.NumberOfEnemies; i++)
+	for(int i=0; i < gameSettings.NumberOfEnemies; i++)
 	{
 		if(EnemySpawners.IsValidIndex(i))
 		{
@@ -38,11 +42,6 @@ void ABaseGameState::StartGame_Implementation()
 void ABaseGameState::GetAliveEnemies_Implementation(TArray<ABaseCharacter*>& OutAliveEnemies)
 {
 	OutAliveEnemies = AliveEnemies;
-}
-
-void ABaseGameState::GetCurrentGameSettings_Implementation(FGameSettings& OutGameSettings)
-{
-	OutGameSettings = CurrentGameSettings;
 }
 
 void ABaseGameState::EndGame_Implementation()

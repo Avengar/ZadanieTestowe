@@ -31,8 +31,6 @@ public:
 
 	void GetAliveEnemies_Implementation(TArray<ABaseCharacter*>& OutAliveEnemies) override;
 
-	 void GetCurrentGameSettings_Implementation(FGameSettings& OutGameSettings) override;
-
 	/**~GameStateInterface*/
 
 protected:
@@ -54,7 +52,4 @@ protected:
 
 	UPROPERTY()
 	ABaseCharacter* PlayerReference;
-
-	UPROPERTY()
-	FGameSettings CurrentGameSettings;
 };

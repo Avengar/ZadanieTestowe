@@ -5,6 +5,7 @@
 
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/GameStateBase.h"
+#include "Kismet/GameplayStatics.h"
 #include "ZadanieTestowe/System/GameStateInterface.h"
 
 AEnemyCharacter::AEnemyCharacter()
@@ -16,13 +17,12 @@ AEnemyCharacter::AEnemyCharacter()
 void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	AGameModeBase* pGameMode = UGameplayStatics::GetGameMode(GetWorld());
 	
-	AGameStateBase* pGameState = GetWorld()->GetGameState();
-	
-	if(pGameState->Implements<UGameStateInterface>())
+	if(pGameMode->Implements<UGameplaySettingsInterface>())
 	{
 		FGameSettings gameSettings;
-		IGameStateInterface::Execute_GetCurrentGameSettings(pGameState, gameSettings);
+		IGameplaySettingsInterface::Execute_GetGameplaySettings(pGameMode, gameSettings);
 		MaximumHealth = gameSettings.EnemyHealth;
 		CurrentHealthPoints = MaximumHealth;
 		GetCharacterMovement()->MaxWalkSpeed = gameSettings.EnemyMovementSpeed;

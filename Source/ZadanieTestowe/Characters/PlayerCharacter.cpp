@@ -5,6 +5,7 @@
 
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/GameState.h"
+#include "Kismet/GameplayStatics.h"
 #include "ZadanieTestowe/System/GameStateInterface.h"
 
 APlayerCharacter::APlayerCharacter()
@@ -16,13 +17,13 @@ APlayerCharacter::APlayerCharacter()
 void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	AGameModeBase* pGameMode = UGameplayStatics::GetGameMode(GetWorld());
 	
-	AGameStateBase* pGameState = GetWorld()->GetGameState();
-	
-	if(pGameState->Implements<UGameStateInterface>())
+	if(pGameMode->Implements<UGameplaySettingsInterface>())
 	{
 		FGameSettings gameSettings;
-		IGameStateInterface::Execute_GetCurrentGameSettings(pGameState, gameSettings);
+		IGameplaySettingsInterface::Execute_GetGameplaySettings(pGameMode, gameSettings);
 		GetCharacterMovement()->MaxWalkSpeed = gameSettings.PlayerMovementSpeed;
 	}
 	

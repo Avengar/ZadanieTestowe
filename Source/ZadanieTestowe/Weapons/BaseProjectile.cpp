@@ -3,6 +3,7 @@
 
 #include "BaseProjectile.h"
 #include "GameFramework/GameStateBase.h"
+#include "Kismet/GameplayStatics.h"
 #include "ZadanieTestowe/System/DamageInterface.h"
 #include "ZadanieTestowe/System/GameStateInterface.h"
 
@@ -42,12 +43,12 @@ void ABaseProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 
-	AGameStateBase* pGameState = GetWorld()->GetGameState();
+	AGameModeBase* pGameMode = UGameplayStatics::GetGameMode(GetWorld());
 	
-	if(IsValid(pGameState) && pGameState->Implements<UGameStateInterface>())
+	if(pGameMode->Implements<UGameplaySettingsInterface>())
 	{
 		FGameSettings gameSettings;
-		IGameStateInterface::Execute_GetCurrentGameSettings(pGameState, gameSettings);
+		IGameplaySettingsInterface::Execute_GetGameplaySettings(pGameMode,gameSettings);
 		ProjectileDamage = gameSettings.ProjectileDamage;
 	}
 }

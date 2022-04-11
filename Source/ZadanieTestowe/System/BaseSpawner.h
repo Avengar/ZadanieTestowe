@@ -7,7 +7,6 @@
 #include "ZadanieTestowe/Characters/BaseCharacter.h"
 #include "Components/ArrowComponent.h"
 #include "Components/BillboardComponent.h"
-#include "ZadanieTestowe/Characters/EnemyCharacter.h"
 #include "BaseSpawner.generated.h"
 
 UCLASS()
